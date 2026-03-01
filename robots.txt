@@ -1,0 +1,11 @@
+# BlackRoad OS, Inc. — robots.txt
+# https://blackroad.io/robots.txt
+
+User-agent: *
+Allow: /
+
+# Point all crawlers to the sitemap
+Sitemap: https://blackroad.io/sitemap.xml
+
+# Crawl-delay hint (be polite)
+Crawl-delay: 1
