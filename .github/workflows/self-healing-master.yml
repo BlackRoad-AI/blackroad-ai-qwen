@@ -321,7 +321,13 @@ jobs:
         continue-on-error: true
         run: |
           echo "🔒 Running security audit..."
-          
+
+          if [ ! -f "package.json" ]; then
+            echo "No package.json found, skipping npm audit for this Python project"
+            echo "vulnerabilities_found=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
           if [ -f "pnpm-lock.yaml" ]; then
             npm install -g pnpm
             pnpm audit --audit-level=high > audit-report.txt 2>&1 || true
@@ -330,7 +336,7 @@ jobs:
             npm audit --audit-level=high > audit-report.txt 2>&1 || true
             npm audit fix || true
           fi
-          
+
           if [ -s "audit-report.txt" ]; then
             echo "vulnerabilities_found=true" >> $GITHUB_OUTPUT
           else

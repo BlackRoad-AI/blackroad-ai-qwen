@@ -22,6 +22,7 @@ services:
       - ENABLE_EMOJI_SUPPORT=true
       - ENABLE_ACTION_EXECUTION=true
       - MEMORY_SCRIPT_PATH=/host-home/memory-system.sh
+      - BLACKROAD_API_KEY=${BLACKROAD_API_KEY}
       - PYTHONUNBUFFERED=1
     restart: unless-stopped
     healthcheck:
@@ -34,6 +35,21 @@ services:
       - "com.blackroad.service=ai-model"
       - "com.blackroad.model=qwen2.5"
       - "com.blackroad.license=apache-2.0"
+
+  # Cloudflare Tunnel — routes public traffic through your own infra
+  # Set CLOUDFLARE_TUNNEL_TOKEN in your environment or .env file
+  # Create a tunnel at: https://one.dash.cloudflare.com/
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: blackroad-cloudflared
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
+    depends_on:
+      - qwen-model
+    restart: unless-stopped
+    profiles:
+      - cloudflare
 
   # Optional: Redis for caching and session management
   redis:
