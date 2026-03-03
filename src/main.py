@@ -6,8 +6,9 @@ Proprietary AI model server with [MEMORY] integration
 import os
 import asyncio
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Security
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security.api_key import APIKeyHeader
 from pydantic import BaseModel
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
@@ -23,11 +24,22 @@ DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 MEMORY_ENABLED = os.getenv("BLACKROAD_MEMORY_ENABLED", "true").lower() == "true"
 EMOJI_SUPPORT = os.getenv("ENABLE_EMOJI_SUPPORT", "true").lower() == "true"
 ACTION_EXECUTION = os.getenv("ENABLE_ACTION_EXECUTION", "true").lower() == "true"
+API_KEY = os.getenv("BLACKROAD_API_KEY", "")
 
 # Global model storage
 model = None
 tokenizer = None
 memory_bridge = None
+
+# API key security scheme
+api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
+
+
+async def verify_api_key(api_key: str = Security(api_key_header)):
+    """Verify API key when one is configured."""
+    if API_KEY and api_key != API_KEY:
+        raise HTTPException(status_code=403, detail="Invalid or missing API key")
+    return api_key
 
 
 class ChatRequest(BaseModel):
@@ -111,7 +123,8 @@ async def root():
         "features": {
             "memory_integration": MEMORY_ENABLED,
             "emoji_support": EMOJI_SUPPORT,
-            "action_execution": ACTION_EXECUTION
+            "action_execution": ACTION_EXECUTION,
+            "auth_enabled": bool(API_KEY)
         }
     }
 
@@ -126,7 +139,7 @@ async def health():
     }
 
 
-@app.post("/chat", response_model=ChatResponse)
+@app.post("/chat", response_model=ChatResponse, dependencies=[Security(verify_api_key)])
 async def chat(request: ChatRequest):
     """
     Generate chat completion

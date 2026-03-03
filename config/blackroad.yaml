@@ -15,6 +15,29 @@ server:
   workers: 1
   reload: false
 
+# Authentication (OAuth / API Key)
+# Set BLACKROAD_API_KEY env var to enable key-based auth on all /chat endpoints.
+# Requests must include:  X-API-Key: <your-key>
+auth:
+  enabled: true
+  api_key_env: "BLACKROAD_API_KEY"
+  header: "X-API-Key"
+
+# Cloudflare Tunnel
+# 1. Create a tunnel at https://one.dash.cloudflare.com/
+# 2. Set CLOUDFLARE_TUNNEL_TOKEN in your .env file or environment
+# 3. Run: docker-compose --profile cloudflare up -d
+# Traffic: internet -> Cloudflare edge -> your infra -> qwen-model
+cloudflare:
+  tunnel_token_env: "CLOUDFLARE_TUNNEL_TOKEN"
+
+# Tailscale
+# Install on each Pi: curl -fsSL https://tailscale.com/install.sh | sh
+# Then: sudo tailscale up --authkey=<your-authkey>
+# Nodes reach this service at http://<tailscale-ip>:8000
+tailscale:
+  authkey_env: "TAILSCALE_AUTHKEY"
+
 # Memory Integration
 memory:
   enabled: true
