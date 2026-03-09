@@ -1,0 +1,101 @@
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "BlackRoad OS, Inc.",
+    "alternateName": ["BlackRoad", "BlackRoad AI", "BlackRoad OS"],
+    "url": "https://blackroad.io",
+    "logo": "https://blackroad.io/logo.png",
+    "description": "BlackRoad OS, Inc. builds sovereign AI infrastructure — an operating system for AI-first companies, managing 30,000+ AI agents, GitHub enterprise, and distributed compute across a Pi cluster.",
+    "foundingLocation": "Delaware, USA",
+    "legalName": "BlackRoad OS, Inc.",
+    "sameAs": [
+      "https://github.com/enterprises/blackroad-os",
+      "https://github.com/BlackRoad-AI",
+      "https://github.com/BlackRoad-OS",
+      "https://github.com/BlackRoad-Cloud",
+      "https://github.com/BlackRoad-Labs",
+      "https://github.com/BlackRoad-Security",
+      "https://github.com/BlackRoad-Foundation",
+      "https://github.com/BlackRoad-Gov",
+      "https://github.com/BlackRoad-Education",
+      "https://github.com/BlackRoad-Media",
+      "https://github.com/BlackRoad-Studio",
+      "https://github.com/BlackRoad-Ventures",
+      "https://github.com/BlackRoad-Hardware",
+      "https://github.com/BlackRoad-Interactive",
+      "https://github.com/BlackRoad-Archive",
+      "https://github.com/Blackbox-Enterprises",
+      "https://blackroadai.com",
+      "https://lucidia.earth",
+      "https://roadchain.io",
+      "https://roadcoin.io"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "blackroad.systems@gmail.com",
+      "contactType": "technical support"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "BlackRoad Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "name": "Sovereign AI Infrastructure",
+          "description": "End-to-end AI operating system for enterprises"
+        },
+        {
+          "@type": "Offer",
+          "name": "Memory Bridge",
+          "description": "Cross-model persistent memory and context system"
+        },
+        {
+          "@type": "Offer",
+          "name": "Distributed Compute",
+          "description": "Pi-cluster and cloud hybrid compute layer"
+        }
+      ]
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "BlackRoad",
+    "url": "https://blackroad.io",
+    "description": "BlackRoad infrastructure directory: GitHub Enterprise, organizations, and registered domains.",
+    "inLanguage": "en",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://blackroad.io/search?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "BlackRoad GitHub Organizations",
+    "description": "All 15 BlackRoad GitHub organizations under the blackroad-os enterprise.",
+    "numberOfItems": 15,
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1,  "name": "Blackbox-Enterprises", "url": "https://github.com/Blackbox-Enterprises" },
+      { "@type": "ListItem", "position": 2,  "name": "BlackRoad-AI",         "url": "https://github.com/BlackRoad-AI" },
+      { "@type": "ListItem", "position": 3,  "name": "BlackRoad-Archive",    "url": "https://github.com/BlackRoad-Archive" },
+      { "@type": "ListItem", "position": 4,  "name": "BlackRoad-Cloud",      "url": "https://github.com/BlackRoad-Cloud" },
+      { "@type": "ListItem", "position": 5,  "name": "BlackRoad-Education",  "url": "https://github.com/BlackRoad-Education" },
+      { "@type": "ListItem", "position": 6,  "name": "BlackRoad-Foundation", "url": "https://github.com/BlackRoad-Foundation" },
+      { "@type": "ListItem", "position": 7,  "name": "BlackRoad-Gov",        "url": "https://github.com/BlackRoad-Gov" },
+      { "@type": "ListItem", "position": 8,  "name": "BlackRoad-Hardware",   "url": "https://github.com/BlackRoad-Hardware" },
+      { "@type": "ListItem", "position": 9,  "name": "BlackRoad-Interactive","url": "https://github.com/BlackRoad-Interactive" },
+      { "@type": "ListItem", "position": 10, "name": "BlackRoad-Labs",       "url": "https://github.com/BlackRoad-Labs" },
+      { "@type": "ListItem", "position": 11, "name": "BlackRoad-Media",      "url": "https://github.com/BlackRoad-Media" },
+      { "@type": "ListItem", "position": 12, "name": "BlackRoad-OS",         "url": "https://github.com/BlackRoad-OS" },
+      { "@type": "ListItem", "position": 13, "name": "BlackRoad-Security",   "url": "https://github.com/BlackRoad-Security" },
+      { "@type": "ListItem", "position": 14, "name": "BlackRoad-Studio",     "url": "https://github.com/BlackRoad-Studio" },
+      { "@type": "ListItem", "position": 15, "name": "BlackRoad-Ventures",   "url": "https://github.com/BlackRoad-Ventures" }
+    ]
+  }
+]
