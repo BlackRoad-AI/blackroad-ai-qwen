@@ -13,7 +13,7 @@ import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from typing import Optional, List, Dict
 import sys
-sys.path.append('/app/memory-bridge')
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'memory-bridge'))
 from memory_integration import MemoryBridge
 
 
@@ -23,6 +23,7 @@ DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 MEMORY_ENABLED = os.getenv("BLACKROAD_MEMORY_ENABLED", "true").lower() == "true"
 EMOJI_SUPPORT = os.getenv("ENABLE_EMOJI_SUPPORT", "true").lower() == "true"
 ACTION_EXECUTION = os.getenv("ENABLE_ACTION_EXECUTION", "true").lower() == "true"
+SKIP_MODEL_LOAD = os.getenv("SKIP_MODEL_LOAD", "false").lower() == "true"
 
 # Global model storage
 model = None
@@ -58,21 +59,23 @@ async def lifespan(app: FastAPI):
     print(f"📦 Model: {MODEL_NAME}")
     print(f"💻 Device: {DEVICE}")
 
-    # Load tokenizer and model
-    tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-    model = AutoModelForCausalLM.from_pretrained(
-        MODEL_NAME,
-        torch_dtype=torch.float16 if DEVICE == "cuda" else torch.float32,
-        device_map="auto"
-    )
+    if not SKIP_MODEL_LOAD:
+        # Load tokenizer and model
+        tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+        model = AutoModelForCausalLM.from_pretrained(
+            MODEL_NAME,
+            torch_dtype=torch.float16 if DEVICE == "cuda" else torch.float32,
+            device_map="auto"
+        )
+        print("✅ Model loaded successfully")
+    else:
+        print("⚠️  SKIP_MODEL_LOAD=true — model not loaded (test/CI mode)")
 
     # Initialize memory bridge
     if MEMORY_ENABLED:
         memory_bridge = MemoryBridge()
         await memory_bridge.connect()
         print("✅ [MEMORY] Bridge connected")
-
-    print("✅ Model loaded successfully")
 
     yield
 
